@@ -1,0 +1,22 @@
+{
+  "name": "Upload",
+  "description": "Upload TinyMCE plugin repo",
+  "main": "",
+  "authors": [
+    "Alfred Mazimbe <alfred.mazimbe@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "blueimp-file-upload": "jquery-file-upload#^9.19.1",
+    "jquery-ui": "^1.12.1"
+  }
+}
