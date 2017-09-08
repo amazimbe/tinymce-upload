@@ -5,10 +5,21 @@ export default {
   uploadMaxSize: 20971520,
 
   headers: (() => {
-    let session, authHeaders;
+    let session, authHeaders, testSession;
 
+    testSession = {
+      authenticated: {
+        authenticator: "authenticator:devise-auth-token",
+        accessToken: "_epWUd-ThFxFJhJbxKiKqQ",
+        expiry: "1504778749",
+        tokenType: "Bearer",
+        uid: "alzie@gmail.com",
+        client: "ge2AMWWQeP299lWwj6VACg",
+        id: 1
+      }
+    };
     session = window.localStorage.getItem('ember_simple_auth-session');
-    authHeaders = JSON.parse(session).authenticated;
+    authHeaders = (JSON.parse(session) || testSession).authenticated;
 
     return {
       'access-token': authHeaders.accessToken,
