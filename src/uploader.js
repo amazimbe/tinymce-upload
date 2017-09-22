@@ -18,8 +18,8 @@ export default class {
       type: 'GET',
       dataType: 'json',
       headers: settings.headers,
-      complete: (response) => {
-        self.credentials = response.responseJSON;
+      complete: ({ responseJSON }) => {
+        self.credentials = responseJSON;
         self.processUpload(element, successCallback, failureCallback);
       }
     });
