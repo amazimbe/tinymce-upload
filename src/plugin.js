@@ -1,31 +1,30 @@
 import Uploader from './uploader';
+import template from './template';
 
 const plugin = (editor) => {
   editor.addButton('upload', {
     tooltip: 'Insert file',
     icon: 'upload',
 
-    onclick: () => {
+    onclick() {
       let window = editor.windowManager.open({
         height: 112,
         width: 460,
+        html: template,
         title: 'Upload',
 
         buttons: [{
           text: 'Cancel',
-          onclick: () => {
+          onclick() {
             window.close();
           }
-        }],
-
-        html: '<div class="editor-upload"> <label class="control-label">File</label> <input type="text" name="selected-file" class="text_file"> <span class="btn btn-default btn-file btn-visible-input"> <input type="file" name="file" data-id="input-upload"> Select file </span> <div class="progress progress-striped active"> <div class="progress-bar" role="progressbar"></div> </div> </div>'
+        }]
       });
 
-      let element, failure, success, text, buildHtml;
-      element = $('.editor-upload');
-      text = $('input[name=selected-file]');
+      let element = $('.editor-upload');
+      let text = $('input[name=selected-file]');
 
-      buildHtml = (filename, url) => {
+      let buildHtml = (filename, url) => {
         if (/\.(gif|jpg|jpeg|png)$/i.test(filename)) {
           return `<img src='${url}' alt='${filename}'>`;
         } else {
@@ -33,19 +32,19 @@ const plugin = (editor) => {
         }
       };
 
-      success = (file, url) => {
+      let success = (file, url) => {
         let html = buildHtml(file, url);
         editor.insertContent(html + '&nbsp;');
         window.close();
       };
 
-      failure = () => {
+      let failure = () => {
         console.error('Upload failed');
       };
 
       element.find('input[type=file]').change(event => {
-        let target = $(event.target),
-          filename = target.val().split('\\').pop();
+        let target = $(event.target);
+        let filename = target.val().split('\\').pop();
         return text.val(filename);
       });
 

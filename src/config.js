@@ -1,13 +1,14 @@
+const JSON_FORMAT = 'application/vnd.hivebench-v4+json';
+const UPLOADS_ENDPOINT = '/api/uploads';
+
 export default {
-  uploadsEndpoint: '/api/uploads',
+  uploadsEndpoint: UPLOADS_ENDPOINT,
 
   // 20MB limit
   uploadMaxSize: 20971520,
 
   headers: (() => {
-    let session, authHeaders, testSession;
-
-    testSession = {
+    let testSession = {
       authenticated: {
         authenticator: "authenticator:devise-auth-token",
         accessToken: "_epWUd-ThFxFJhJbxKiKqQ",
@@ -18,22 +19,23 @@ export default {
         id: 1
       }
     };
-    session = window.localStorage.getItem('ember_simple_auth-session');
-    authHeaders = (JSON.parse(session) || testSession).authenticated;
+
+    let session = window.localStorage.getItem('ember_simple_auth-session');
+    let authHeaders = (JSON.parse(session) || testSession).authenticated;
 
     return {
       'access-token': authHeaders.accessToken,
       client: authHeaders.client,
       id: authHeaders.id,
       uid: authHeaders.uid,
-      accept: 'application/vnd.hivebench-v4+json'
+      accept: JSON_FORMAT
     };
   })(),
 
   local: {
     crossDomain: false,
     url: (credentials) => {
-      return '/api/uploads';
+      return UPLOADS_ENDPOINT;
     },
     base: (credentials) => {
       return `/${credentials.base}`;

@@ -51,14 +51,13 @@ export default class {
       headers: settings.headers,
 
       formData: () => {
-        let extension, file, filename, formData;
+        let file = uploader.files[0];
+        let extension = file.name.split('.').pop();
+        let filename = `${new Date().getTime()}${Math.floor(Math.random() * 10001)}.${extension}`;
 
-        file = uploader.files[0];
-        extension = file.name.split('.').pop();
-        filename = `${new Date().getTime()}${Math.floor(Math.random() * 10001)}.${extension}`;
         uploader.filenames[`${file.name}-${file.size}`] = filename;
 
-        formData = uploader.getParam('formData');
+        let formData = uploader.getParam('formData');
         formData.push({ name: 'Content-Type', value: file.type });
         formData.push({ name: 'key', value: uploader.pathFor(filename) });
 
@@ -75,8 +74,8 @@ export default class {
       },
 
       done: (event, data) => {
-        let file = data.files[0],
-          id = uploader.filename(file);
+        let file = data.files[0];
+        let id = uploader.filename(file);
 
         $.ajax({
           url: `${settings.uploadsEndpoint}/${id}`,
@@ -104,11 +103,11 @@ export default class {
       },
 
       progress: (event, data) => {
-        let bar, file, percentage, progress;
-        file = data.files[0];
-        percentage = data.loaded / file.size * 100;
-        progress = element.find('.progress');
-        bar = progress.find('.progress-bar');
+        let file = data.files[0];
+        let percentage = data.loaded / file.size * 100;
+        let progress = element.find('.progress');
+        let bar = progress.find('.progress-bar');
+
         progress.attr('style', '');
         bar.removeClass('progress-bar-danger');
         bar.attr('style', `width: ${percentage}%`);
