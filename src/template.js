@@ -8,4 +8,4 @@ export default `
     <div class="progress progress-striped active">
       <div class="progress-bar" role="progressbar"></div>
     </div>
-  </div>`
+  </div>`;

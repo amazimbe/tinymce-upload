@@ -34,13 +34,13 @@ export default {
 
   local: {
     crossDomain: false,
-    url: (credentials) => {
+    url: () => {
       return UPLOADS_ENDPOINT;
     },
     base: (credentials) => {
       return `/${credentials.base}`;
     },
-    formData: (credentials) => {
+    formData: () => {
       return [];
     }
   },
@@ -75,4 +75,4 @@ export default {
       }];
     }
   }
-}
+};

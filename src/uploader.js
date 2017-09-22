@@ -30,7 +30,7 @@ export default class {
   }
 
   pathFor(name) {
-    return `${this.credentials['base']}${name}`;
+    return `${this.credentials.base}${name}`;
   }
 
   experiment() {
@@ -68,8 +68,6 @@ export default class {
         uploader.files = data.files;
         if (data.files[0].size <= settings.uploadMaxSize) {
           data.submit();
-        } else {
-          console.error('File too large');
         }
       },
 
