@@ -1,22 +1,54 @@
-import _ from 'lodash';
+import Uploader from './uploader';
+import template from './template';
 
 const plugin = (editor) => {
   editor.addButton('upload', {
-    text: 'upload',
-    icon: false,
-    onclick: () => {
-      // Open window
-      editor.windowManager.open({
-        title: 'upload plugin',
-        body: [
-          { type: 'textbox', name: 'title' }
-        ],
-        onsubmit(e) {
-          // Insert content when the window form is submitted
-          const kebabbyString = _.kebabCase(e.data.title);
-          editor.insertContent(kebabbyString);
-        }
+    tooltip: 'Insert file',
+    icon: 'upload',
+
+    onclick() {
+      let window = editor.windowManager.open({
+        height: 112,
+        width: 460,
+        html: template,
+        title: 'Upload',
+
+        buttons: [{
+          text: 'Cancel',
+          onclick() {
+            window.close();
+          }
+        }]
       });
+
+      let element = $('.editor-upload');
+      let text = $('input[name=selected-file]');
+
+      let buildHtml = (filename, url) => {
+        if (/\.(gif|jpg|jpeg|png)$/i.test(filename)) {
+          return `<img src='${url}' alt='${filename}'>`;
+        } else {
+          return `<a href='${url}'>${filename}</a>`;
+        }
+      };
+
+      let success = (file, url) => {
+        let html = buildHtml(file, url);
+        editor.insertContent(html + '&nbsp;');
+        window.close();
+      };
+
+      let failure = () => {
+        console.error('Upload failed');
+      };
+
+      element.find('input[type=file]').change(event => {
+        let target = $(event.target);
+        let filename = target.val().split('\\').pop();
+        return text.val(filename);
+      });
+
+      new Uploader().upload(element, success, failure);
     }
   });
 };

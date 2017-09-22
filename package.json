@@ -7,7 +7,7 @@
     "lint": "eslint 'src/**/*.js'",
     "build": "webpack --config config/webpack.config.prod.js --progress"
   },
-  "author": "",
+  "author": "Alfred Mazimbe",
   "devDependencies": {
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
